@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { Link, Route, Switch } from "react-router-dom"
 import CreateClass from "./CategoriesEdit"
-import ClassList from "./ClassList"
+import CategoryList from "./CategoryList"
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
@@ -51,11 +51,12 @@ export default class Main extends Component {
             padding: 24,
             margin: 0,
             minHeight: 280,
+            height: "100vh"
           }}
         >
           <Switch>
             <Route path="/categories/create" component={CreateClass}></Route>
-            <Route path="/categories/list" component={ClassList}></Route>
+            <Route path="/categories/list" component={CategoryList}></Route>
           </Switch>
         </Content>
       </Layout>

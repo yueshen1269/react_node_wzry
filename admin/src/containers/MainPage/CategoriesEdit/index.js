@@ -8,15 +8,16 @@ import Request from "../../../utils/request"
 class CreateClass extends Component {
   constructor(props) {
     super(props);
+    this.state={}
   }
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields(async function(err, values) {
+    this.props.form.validateFields(async (err, values) => {
       if (!err) {
         try {
           const res = await Request.axios('post', '/categories', values);
           if(res) {
-
+            this.props.history.push("/categories/list")
           } else {
             message.error(res.data)
           }
@@ -43,11 +44,11 @@ class CreateClass extends Component {
       wrapperCol: { span: 2, offset: 2 },
     };
     return (
-    <>
+    <Fragment>
       <h1>新建分类</h1>
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
       <Form.Item label="名称" hasFeedback>
-          {getFieldDecorator('class', {
+          {getFieldDecorator('name', {
             rules: [
               {
                 required: true,
@@ -63,7 +64,7 @@ class CreateClass extends Component {
           </Button>
         </Form.Item>
       </Form>
-    </>
+    </Fragment>
 
     )
   }
