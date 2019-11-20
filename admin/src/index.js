@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { HashRouter, Route, Switch } from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import * as serviceWorker from './serviceWorker';
 import Register from "./containers/RegisterPage"
 import Login from "./containers/LoginPage"
@@ -12,13 +12,13 @@ import Request from "./utils/request"
 
 ReactDOM.render((
   <Provider store={store}>
-     <HashRouter>
+     <Router>
       <Switch>
         <Route path="/register" exact component={Register}></Route>
         <Route path="/login" exact component={Login}></Route>
         <Route component={Main}></Route>
       </Switch>
-    </HashRouter>
+    </Router>
   </Provider>
 ), document.getElementById('root'));
 

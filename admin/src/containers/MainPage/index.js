@@ -8,15 +8,18 @@ const { Content, Sider } = Layout;
 
 
 export default class Main extends Component {
+
   render() {
+    const currentKey = [this.props.history.location.pathname] || ["/categories/create"];
     return (
 
     <Layout style={{height: "100vh"}}>
       <Sider width={200} style={{ background: '#fff' }}>
         <Menu
           mode="inline"
-          defaultSelectedKeys={['1']}
+          defaultSelectedKeys={['create']}
           defaultOpenKeys={['sub1']}
+          selectedKeys={currentKey}
           style={{ height: '100%', borderRight: 0 }}
         >
           <SubMenu
@@ -29,11 +32,15 @@ export default class Main extends Component {
             }
           >
             <Menu.ItemGroup key="g1" title="分类">
-              <Menu.Item key="1">
-                <Link to="/categories/create">新建分类</Link>
+              <Menu.Item key="/categories/create" >
+                <Link to="/categories/create"
+                // style={{color: this.props.history.location.pathname === '/categories/create' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'}}
+                >新建分类</Link>
               </Menu.Item>
-              <Menu.Item key="2">
-                <Link to="/categories/list">分类列表</Link>
+              <Menu.Item key="/categories/list">
+                <Link to="/categories/list"
+                // style={{color: this.props.history.location.pathname === '/categories/list' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'}}
+                >分类列表</Link>
               </Menu.Item>
             </Menu.ItemGroup>
           </SubMenu>
@@ -56,6 +63,7 @@ export default class Main extends Component {
           <Switch>
             <Route path="/categories/create" component={CreateClass}></Route>
             <Route path="/categories/list" component={ClassList}></Route>
+            <Route path="/categories/edit/:detail" component={CreateClass}></Route>
           </Switch>
         </Content>
       </Layout>

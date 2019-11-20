@@ -42,10 +42,5 @@
     "babel-plugin-import": "^1.12.0",
     "redux-devtools-extension": "^2.13.8"
   },
-  "proxy": {
-    "/app": {
-      "target": "http:localhost:3001/admin/api",
-      "changeOrigin": true
-    }
-  }
+  "proxy": "http://localhost:3001/admin/api"
 }
