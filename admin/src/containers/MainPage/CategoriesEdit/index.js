@@ -8,6 +8,7 @@ import Request from "../../../utils/request"
 class CreateClass extends Component {
   constructor(props) {
     super(props);
+    this.state={}
   }
   handleSubmit = (e,id) => {
     e.preventDefault();
@@ -21,8 +22,12 @@ class CreateClass extends Component {
             res = await Request.axios('post', '/categories', values);
           }
           if(res) {
+<<<<<<< HEAD
             console.log("this:",this);
             this.props.history.push("/categories/list");
+=======
+            this.props.history.push("/categories/list")
+>>>>>>> 3c6d9712c623e3a75c32b4016fd9e19520a66e61
           } else {
             message.error(res.data)
           }
@@ -55,11 +60,19 @@ class CreateClass extends Component {
       wrapperCol: { span: 2, offset: 2 },
     };
     return (
+<<<<<<< HEAD
     <>
       <h1>{id ? "编辑分类" : "新建分类"}</h1>
       <Form {...formItemLayout} onSubmit={(e) => {this.handleSubmit(e, id)}}>
       <Form.Item label="名称" hasFeedback>
           {getFieldDecorator('category', {
+=======
+    <Fragment>
+      <h1>新建分类</h1>
+      <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+      <Form.Item label="名称" hasFeedback>
+          {getFieldDecorator('name', {
+>>>>>>> 3c6d9712c623e3a75c32b4016fd9e19520a66e61
             rules: [
               {
                 required: true,
@@ -79,7 +92,7 @@ class CreateClass extends Component {
           </Button>
         </Form.Item>
       </Form>
-    </>
+    </Fragment>
 
     )
   }
