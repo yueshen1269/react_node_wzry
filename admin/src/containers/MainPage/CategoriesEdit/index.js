@@ -1,14 +1,19 @@
 
 import React, { Component, Fragment } from "react"
-import { Form, Input, Button, message } from "antd"
+import { Form, Input, Button, message, Select } from "antd"
 import Request from "../../../utils/request"
 
-
+const {Option} = Select;
 
 class CreateClass extends Component {
   constructor(props) {
     super(props);
-    this.state={}
+    this.state={
+      categories: []
+    }
+  }
+  componentDidMount() {
+    this.fetchCategories();
   }
   handleSubmit = (e,id) => {
     e.preventDefault();
@@ -17,17 +22,12 @@ class CreateClass extends Component {
         let res;
         try {
           if(id) {
-            res = await Request.axios('put', `/categories/${id}`, values);
+            res = await Request.axios('put', `/rest/categories/${id}`, values);
           } else {
-            res = await Request.axios('post', '/categories', values);
+            res = await Request.axios('post', '/rest/categories', values);
           }
           if(res) {
-<<<<<<< HEAD
-            console.log("this:",this);
-            this.props.history.push("/categories/list");
-=======
             this.props.history.push("/categories/list")
->>>>>>> 3c6d9712c623e3a75c32b4016fd9e19520a66e61
           } else {
             message.error(res.data)
           }
@@ -39,6 +39,7 @@ class CreateClass extends Component {
   };
   render() {
     const { getFieldDecorator } = this.props.form;
+    const {categories} = this.state;
     console.log("dd:", this.props.location, "ff:", this.props.history, "gg:", this.props.match);
     const params = this.props.match.params;
     let id, category;
@@ -60,19 +61,40 @@ class CreateClass extends Component {
       wrapperCol: { span: 2, offset: 2 },
     };
     return (
-<<<<<<< HEAD
     <>
       <h1>{id ? "编辑分类" : "新建分类"}</h1>
       <Form {...formItemLayout} onSubmit={(e) => {this.handleSubmit(e, id)}}>
-      <Form.Item label="名称" hasFeedback>
+      <Form.Item label="父分类">
+        {getFieldDecorator('parents', {
+
+
+        })(
+          <Select
+          showSearch
+          style={{ width: 200 }}
+          placeholder="Select a category"
+          optionFilterProp="children"
+          // onChange={onChange}
+          // onSearch={onSearch}
+          filterOption={(input, option) =>
+            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
+        >
+          {categories.length>0 && categories.map(category => (
+            <Option
+              key={category._id}
+              value={category._id}
+            >
+              {category.category}
+            </Option>
+          ))}
+
+          </Select>
+        )
+        }
+        </Form.Item>
+        <Form.Item label="名称" hasFeedback>
           {getFieldDecorator('category', {
-=======
-    <Fragment>
-      <h1>新建分类</h1>
-      <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-      <Form.Item label="名称" hasFeedback>
-          {getFieldDecorator('name', {
->>>>>>> 3c6d9712c623e3a75c32b4016fd9e19520a66e61
             rules: [
               {
                 required: true,
@@ -83,7 +105,7 @@ class CreateClass extends Component {
 
           })(<Input  />)}
         </Form.Item>
-        <Form.Item {...formTailLayout}>
+          <Form.Item {...formTailLayout}>
           <Button
             type="primary"
             htmlType="submit"
@@ -92,9 +114,15 @@ class CreateClass extends Component {
           </Button>
         </Form.Item>
       </Form>
-    </Fragment>
+    </>
 
     )
+  }
+
+  fetchCategories = async () => {
+    const categories = await Request.axios('get', '/rest/categories');
+    console.log("categoryie", categories);
+    this.setState({categories})
   }
 }
 

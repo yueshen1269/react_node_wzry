@@ -1,8 +1,7 @@
 
 import React, { Component } from "react"
 import Request from "../../../utils/request"
-import { Table, Divider } from 'antd';
-
+import { Table, Divider, Popconfirm, message } from 'antd';
 
 
 export default class ClassList extends Component {
@@ -24,20 +23,27 @@ export default class ClassList extends Component {
         key: 'category',
       },
       {
+        title: 'parent',
+        dataIndex: 'parents.category',
+        key: 'parent',
+      },
+      {
         title: 'Action',
         key: 'action',
         render: (text, record) => (
           <span>
-            <a onClick={() => this.handleEdit(text, record)}>edit</a>
+            <a onClick={() => this.handleEdit(record)}>edit</a>
             <Divider type="vertical" />
-            <a onClick={() => this.handleDelete(text, record)}>Delete</a>
+            <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record._id)}>
+              <a>Delete</a>
+            </Popconfirm>
           </span>
         ),
       },
     ];
   }
   async componentWillMount() {
-    const data = await Request.axios('get', '/categories');
+    const data = await Request.axios('get', '/rest/categories');
     this.setState({data})
   }
   render() {
@@ -52,17 +58,16 @@ export default class ClassList extends Component {
     </>)
   }
 
-  handleEdit = (text, record) => {
+  handleEdit = (record) => {
     let {_id, category} = record;
     if(!category) category = "";
     this.props.history.push(`/categories/edit/${_id}_${category}`)
-    // console.log("text:",text,"record:", record);
   }
 
-  handleDelete = async (text, record) => {
-    let {_id} = record;
-    await Request.axios('delete', `/categories/${_id}`);
-    const data = await Request.axios('get', '/categories');
-    this.setState({data})
+  handleDelete = async (_id) => {
+    await Request.axios('delete', `/rest/categories/${_id}`);
+    const data = await Request.axios('get', '/rest/categories');
+    this.setState({data});
+    message.success("delete successfully")
   }
 }
