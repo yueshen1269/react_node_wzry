@@ -7,6 +7,7 @@ app.use(require("cors")());
 require("./routes/admin")(app);
 require("./plugins/db")(app);
 
+app.use("/uploads", express.static(__dirname + '/uploads'))
 app.listen(3001, () => {
   console.log("http://localhost:3001")
 });

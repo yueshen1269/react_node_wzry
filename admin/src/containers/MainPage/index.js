@@ -3,6 +3,8 @@ import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { Link, Route, Switch } from "react-router-dom"
 import CreateClass from "./CategoriesEdit"
 import ClassList from "./ClassList"
+import ItemEdit from "./ItemsEdit"
+import ItemsList from "./ItemsList"
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
@@ -10,7 +12,13 @@ const { Content, Sider } = Layout;
 export default class Main extends Component {
 
   render() {
-    const currentKey = [this.props.history.location.pathname] || ["/categories/create"];
+    let currentKey = [this.props.history.location.pathname] || ["/categories/create"];
+    if(currentKey[0].startsWith("/categories/edit")) {
+      currentKey[0] = "categories/create";
+    } else if (currentKey[0].startsWith("/items/edit")) {
+      currentKey[0] = "/items/create";
+    }
+    console.log("currentKey", currentKey)
     return (
 
     <Layout style={{height: "100vh"}}>
@@ -31,7 +39,7 @@ export default class Main extends Component {
               </span>
             }
           >
-            <Menu.ItemGroup key="g1" title="分类">
+            <Menu.ItemGroup key="category" title="分类">
               <Menu.Item key="/categories/create" >
                 <Link to="/categories/create"
                 // style={{color: this.props.history.location.pathname === '/categories/create' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'}}
@@ -41,6 +49,18 @@ export default class Main extends Component {
                 <Link to="/categories/list"
                 // style={{color: this.props.history.location.pathname === '/categories/list' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'}}
                 >分类列表</Link>
+              </Menu.Item>
+            </Menu.ItemGroup>
+            <Menu.ItemGroup key="item" title="物品">
+              <Menu.Item key="/items/create" >
+                <Link to="/items/create"
+                // style={{color: this.props.history.location.pathname === '/items/create' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'}}
+                >新建物品</Link>
+              </Menu.Item>
+              <Menu.Item key="/items/list">
+                <Link to="/items/list"
+                // style={{color: this.props.history.location.pathname === '/items/list' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'}}
+                >物品列表</Link>
               </Menu.Item>
             </Menu.ItemGroup>
           </SubMenu>
@@ -64,6 +84,9 @@ export default class Main extends Component {
             <Route path="/categories/create" component={CreateClass}></Route>
             <Route path="/categories/list" component={ClassList}></Route>
             <Route path="/categories/edit/:detail" component={CreateClass}></Route>
+            <Route path="/items/create" component={ItemEdit}></Route>
+            <Route path="/items/list" component={ItemsList}></Route>
+            <Route path="/items/edit/:detail" component={ItemEdit}></Route>
           </Switch>
         </Content>
       </Layout>
