@@ -11,14 +11,22 @@ class ItemEdit extends Component {
     this.state={
       loading: false,
     }
+    this.token = null;
   }
   componentWillMount() {
-
+    const storage = window.localStorage;
+    this.token = JSON.parse(storage.getItem("token"));
   }
   componentDidMount() {
     // this.fetchCategories();
     const _id = this.props.match.params.detail;
-    console.log("-d", _id);
+    const storage = window.localStorage;
+    const last = JSON.parse(storage.getItem("last"));
+    if(this.token === null || new Date() - new Date(last) > 3600000) {
+      this.fetchToken();
+      this.token = JSON.params(storage.getItem("token"));
+      console.log("fetch new token:", this.token);
+    }
     if(_id) {
       this.fetchItemByID(_id);
     }
@@ -50,6 +58,7 @@ class ItemEdit extends Component {
     const { getFieldDecorator } = this.props.form;
     const {loading, imageUrl, name} = this.state;
     const params = this.props.match.params;
+    const option = {token: this.token};
     let id = params.detail;
     // if(JSON.stringify(params) !== "{}") {
     //   [id, icon, name] = params.detail.split("_");
@@ -127,7 +136,8 @@ class ItemEdit extends Component {
               listType="picture-card"
               className="avatar-uploader"
               showUploadList={false}
-              action="http://localhost:3001/admin/api/upload/"
+              data={option}
+              action="http://upload.qiniup.com"
               // beforeUpload={beforeUpload}
               onChange={this.handleChange}
               // style={{width: "128px", height: "128px"}}
@@ -154,6 +164,15 @@ class ItemEdit extends Component {
   //   console.log("items", items);
   //   this.setState({items})
   // }
+
+  fetchToken = async id => {
+    const res = await Request.axios("get", "获得七牛token的地址");
+    const {data} = res;
+    const storage = window.localStorage;
+    storage.setItem("token", JSON.stringify(data));
+    storage.setItem("last", JSON.stringify(new Date()))
+  }
+
   fetchItemByID = async id => {
     const res = await Request.axios("get", `/rest/items/${id}`);
     console.log("res,",res)
@@ -184,7 +203,8 @@ class ItemEdit extends Component {
       //   }),
       // );
       this.setState({
-        imageUrl: info.file.response.url,
+        // imageUrl: info.file.response.url,
+        imageUrl: "图片地址前缀"+info.file.response.key,
         loading: false,
       })
     }
