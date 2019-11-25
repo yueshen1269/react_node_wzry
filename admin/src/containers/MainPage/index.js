@@ -5,6 +5,8 @@ import CreateClass from "./CategoriesEdit"
 import ClassList from "./ClassList"
 import ItemEdit from "./ItemsEdit"
 import ItemsList from "./ItemsList"
+import HeroEdit from "./HeroesEdit"
+import HeroesList from "./HeroesList"
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
@@ -17,6 +19,8 @@ export default class Main extends Component {
       currentKey[0] = "categories/create";
     } else if (currentKey[0].startsWith("/items/edit")) {
       currentKey[0] = "/items/create";
+    } else if (currentKey[0].startsWith("/heroes/edit")) {
+      currentKey[0] = "/heroes/create";
     }
     console.log("currentKey", currentKey)
     return (
@@ -63,6 +67,18 @@ export default class Main extends Component {
                 >物品列表</Link>
               </Menu.Item>
             </Menu.ItemGroup>
+            <Menu.ItemGroup key="hero" title="英雄">
+              <Menu.Item key="/heroes/create" >
+                <Link to="/heroes/create"
+                // style={{color: this.props.history.location.pathname === '/heroes/create' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'}}
+                >新建英雄</Link>
+              </Menu.Item>
+              <Menu.Item key="/heroes/list">
+                <Link to="/heroes/list"
+                // style={{color: this.props.history.location.pathname === '/heroes/list' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'}}
+                >英雄列表</Link>
+              </Menu.Item>
+            </Menu.ItemGroup>
           </SubMenu>
         </Menu>
       </Sider>
@@ -87,6 +103,9 @@ export default class Main extends Component {
             <Route path="/items/create" component={ItemEdit}></Route>
             <Route path="/items/list" component={ItemsList}></Route>
             <Route path="/items/edit/:detail" component={ItemEdit}></Route>
+            <Route path="/heroes/create" component={HeroEdit}></Route>
+            <Route path="/heroes/list" component={HeroesList}></Route>
+            <Route path="/heroes/edit/:detail" component={HeroEdit}></Route>
           </Switch>
         </Content>
       </Layout>

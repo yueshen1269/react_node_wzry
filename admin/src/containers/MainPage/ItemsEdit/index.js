@@ -23,8 +23,8 @@ class ItemEdit extends Component {
     const storage = window.localStorage;
     const last = JSON.parse(storage.getItem("last"));
     if(this.token === null || new Date() - new Date(last) > 3600000) {
-      this.fetchToken();
-      this.token = JSON.params(storage.getItem("token"));
+      // this.fetchToken();
+      this.token = JSON.parse(storage.getItem("token"));
       console.log("fetch new token:", this.token);
     }
     if(_id) {
@@ -137,7 +137,8 @@ class ItemEdit extends Component {
               className="avatar-uploader"
               showUploadList={false}
               data={option}
-              action="http://upload.qiniup.com"
+              // action="http://upload.qiniup.com"
+              action="http://localhost:3001/admin/api/upload"
               // beforeUpload={beforeUpload}
               onChange={this.handleChange}
               // style={{width: "128px", height: "128px"}}
@@ -203,8 +204,8 @@ class ItemEdit extends Component {
       //   }),
       // );
       this.setState({
-        // imageUrl: info.file.response.url,
-        imageUrl: "图片地址前缀"+info.file.response.key,
+        imageUrl: info.file.response.url,
+        // imageUrl: "图片地址前缀"+info.file.response.key,
         loading: false,
       })
     }

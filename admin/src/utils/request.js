@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export default class Requset {
+export default class Request {
   static axiosConfigInit() {
     if(process.env.NODE_ENV !== "production") {
       axios.defaults.baseURL = "http://localhost:3001/admin/api";

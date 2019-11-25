@@ -4,7 +4,7 @@ import Request from "../../../utils/request"
 import { Table, Divider, Popconfirm, message } from 'antd';
 
 
-export default class ItemsList extends Component {
+export default class HeroesList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,22 +12,22 @@ export default class ItemsList extends Component {
     }
     this.columns = [
       {
-        title: 'id',
-        dataIndex: '_id',
+        title: 'heroId',
+        dataIndex: 'heroId',
         key: '_id',
         width: 150,
       },
       {
-        title: 'item',
+        title: '英雄',
         dataIndex: 'name',
         key: 'item',
       },
       {
-        title: 'icon',
-        dataIndex: 'icon',
-        key: 'parent',
+        title: 'avatar',
+        dataIndex: 'avatar',
+        key: 'avatar',
         render: (text, record) => (
-          <img src={record.icon} alt="avatar"style={{height: "3rem"}}/>
+          <img src={record.avatar} alt="avatar" style={{height: "3rem"}}/>
         )
       },
       {
@@ -46,7 +46,7 @@ export default class ItemsList extends Component {
     ];
   }
   async componentDidMount() {
-    const data = await Request.axios('get', '/rest/items');
+    const data = await Request.axios('get', '/rest/heroes');
     this.setState({data})
   }
   render() {
@@ -63,12 +63,12 @@ export default class ItemsList extends Component {
 
   handleEdit = (record) => {
     let {_id} = record;
-    this.props.history.push(`/items/edit/${_id}`)
+    this.props.history.push(`/heroes/edit/${_id}`)
   }
 
   handleDelete = async (_id) => {
-    await Request.axios('delete', `/rest/items/${_id}`);
-    const data = await Request.axios('get', '/rest/items');
+    await Request.axios('delete', `/rest/heroes/${_id}`);
+    const data = await Request.axios('get', '/rest/heroes');
     this.setState({data});
     message.success("delete successfully")
   }
