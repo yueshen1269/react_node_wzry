@@ -1,10 +1,11 @@
 
 import React, { Component, Fragment } from "react"
-import { Form, Input, Button, message, Upload, Icon, Select, Rate, Tabs } from "antd"
+import { Form, Input, Button, message, Upload, Icon, Select, Rate, Tabs, Popconfirm, Row, Col } from "antd"
 import Request from "../../../utils/request"
 
 const {Option} = Select;
 const { TabPane } = Tabs;
+const { TextArea } = Input;
 
 const desc = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 class HeroEdit extends Component {
@@ -14,6 +15,7 @@ class HeroEdit extends Component {
       loading: false,
       categories: [],
       evaluate: {},
+      spells: [],
     }
     this.token = null;
   }
@@ -38,6 +40,7 @@ class HeroEdit extends Component {
   handleSubmit = (e,id) => {
     e.preventDefault();
     this.props.form.validateFields(async (err, values) => {
+      console.log("values:", values)
       if (!err) {
         let res;
         try {
@@ -59,10 +62,11 @@ class HeroEdit extends Component {
   };
   render() {
     const { getFieldDecorator } = this.props.form;
-    const {loading, imageUrl, name, alias, title, evaluate, heroId, isWeekFree, roles, categories} = this.state;
+    const {loading, imageUrl, name, alias, title, evaluate, heroId, isWeekFree, roles, categories, spells} = this.state;
     const params = this.props.match.params;
     const option = {token: this.token};
     let id = params.detail;
+    console.log("spells:", spells)
     // if(JSON.stringify(params) !== "{}") {
     //   [id, icon, name] = params.detail.split("_");
     // }
@@ -145,7 +149,7 @@ class HeroEdit extends Component {
                 required: true,
               },
             ],
-            initialValue: "0"
+            initialValue: isWeekFree || "0"
           })(
             <Select
               style={{ width: 200 }}
@@ -280,7 +284,153 @@ class HeroEdit extends Component {
           </Form.Item>
           </TabPane>
         <TabPane tab="技能" key="spells">
+            <Button
+              type="primary"
+              onClick={this.handleAddSpell}
+            >
+              <Icon type="plus" />新增技能
+            </Button>
+            <Row>
+            {
+              spells.map((spell, index) => {
+                return (
+                <Col key={spell.name || index} span={12}>
+                  <Form.Item label="技能名称">
+                    {getFieldDecorator(`spells[${index}].name`, {
+                      rules: [
+                        {
+                          required: true,
+                        },
+                      ],
+                      initialValue: spell.name || ""
+                    })(
+                      <Input />
+                    )
+                    }
+                  </Form.Item>
+                  <Form.Item label="技能按键">
+                    {getFieldDecorator(`spells[${index}].spellKey`, {
+                      rules: [
+                        {
+                          required: true,
+                        },
+                      ],
+                      initialValue: spell.spellKey || "passive"
+                    })(
+                      <Select>
+                        <Option key="passive" value="passive">被动</Option>
+                        <Option key="q" value="q">Q</Option>
+                        <Option key="w" value="w">W</Option>
+                        <Option key="e" value="e">E</Option>
+                        <Option key="r" value="r">R</Option>
+                      </Select>
+                    )
+                    }
+                  </Form.Item>
+                  <Form.Item label="技能图标">
+                    <Upload
+                      name="file"
+                      accept="image/*"
+                      listType="picture-card"
+                      className="avatar-uploader"
+                      showUploadList={false}
+                      data={option}
+                      // action="http://upload.qiniup.com"
+                      action="http://localhost:3001/admin/api/upload"
+                      onChange={(info) => this.handleChange(info, index)}
+                    >
+                      {spell.abilityIconPath ? (<img src={spell.abilityIconPath} alt="icon" style={{ width: '100%' }} />) : uploadButton}
+                    </Upload>
+                  </Form.Item>
+                  <Form.Item label="技能音频">
+                    <Upload
+                        name="file"
+                        accept="video/*"
+                        listType="picture-card"
+                        className="avatar-uploader"
+                        showUploadList={false}
+                        data={option}
+                        // action="http://upload.qiniup.com"
+                        action="http://localhost:3001/admin/api/upload"
+                        onChange={(info) => this.handleChange(info, index, "audio")}
+                      >
+                        {spell.abilityVideoPath ? (<img src={spell.abilityVideoPath} alt="icon" style={{ width: '100%' }} />) : uploadButton}
+                      </Upload>
+                  </Form.Item>
+                  <Form.Item label="技能消耗">
+                    {getFieldDecorator(`spells[${index}].cost`, {
+                      rules: [
+                        {
+                          required: true,
+                        },
+                      ],
+                      initialValue: spell.cost || ""
+                    })(
+                      <Input />
+                    )
+                    }
+                  </Form.Item>
+                  <Form.Item label="技能冷却">
+                    {getFieldDecorator(`spells[${index}].cooldown`, {
+                      rules: [
+                        {
+                          required: true,
+                        },
+                      ],
+                      initialValue: spell.cooldown || ""
+                    })(
+                      <Input />
+                    )
+                    }
+                  </Form.Item>
+                  <Form.Item label="技能范围">
+                    {getFieldDecorator(`spells[${index}].range`, {
+                      rules: [
+                        {
+                          required: true,
+                        },
+                      ],
+                      initialValue: spell.range || ""
+                    })(
+                      <Input />
+                    )
+                    }
+                  </Form.Item>
+                  <Form.Item label="技能描述">
+                    {getFieldDecorator(`spells[${index}].description]`, {
+                      rules: [
+                        {
+                          required: true,
+                        },
+                      ],
+                      initialValue: spell.description || ""
+                    })(
+                      <TextArea autosize/>
+                    )
+                    }
+                  </Form.Item>
+                  <Form.Item label="伤害描述">
+                    {getFieldDecorator(`spells[${index}].dynamicDescription`, {
+                      rules: [
+                        {
+                          required: true,
+                        },
+                      ],
+                      initialValue: spell.dynamicDescription || ""
+                    })(
+                      <TextArea autosize/>
+                    )
+                    }
+                  </Form.Item>
+                  <Popconfirm title="Sure to delete?" onConfirm={()=>{spells.splice(index, 1); this.setState({spells})}}>
+                    <Button type="danger">删除</Button>
+                  </Popconfirm>
+                </Col>
 
+                )
+              })
+            }
+            </Row>
         </TabPane>
       </Tabs>
 
@@ -288,6 +438,7 @@ class HeroEdit extends Component {
         <Button
           type="primary"
           htmlType="submit"
+          style={{marginTop: "1rem"}}
         >
           保存
         </Button>
@@ -306,6 +457,14 @@ class HeroEdit extends Component {
   //   this.setState({items})
   // }
 
+  handleAddSpell = () => {
+    const {spells} = this.state;
+    spells.push({});
+    this.setState({
+      spells,
+    })
+  }
+
   fetchToken = async id => {
     const res = await Request.axios("get", "获得七牛token的地址");
     const {data} = res;
@@ -317,7 +476,7 @@ class HeroEdit extends Component {
   fetchHeroByID = async id => {
     const res = await Request.axios("get", `/rest/heroes/${id}`);
     console.log("res,",res)
-    const {name, avatar, title, alias, roles, isWeekFree, evaluate, heroId} = res;
+    const {name, avatar, title, alias, roles, isWeekFree, evaluate, heroId, spells,} = res;
     this.setState({
       name,
       title,
@@ -327,6 +486,7 @@ class HeroEdit extends Component {
       imageUrl: avatar,
       evaluate,
       heroId,
+      spells,
     })
   }
 
@@ -341,7 +501,7 @@ class HeroEdit extends Component {
     reader.readAsDataURL(img);
   }
 
-  handleChange = info => {
+  handleChange = (info, index, type) => {
     if (info.file.status === 'uploading') {
       this.setState({ loading: true });
       return;
@@ -354,11 +514,25 @@ class HeroEdit extends Component {
       //     loading: false,
       //   }),
       // );
-      this.setState({
-        imageUrl: info.file.response.url,
-        // imageUrl: "图片地址前缀"+info.file.response.key,
-        loading: false,
-      })
+      if(typeof index !== "undefined") {
+        const {spells} = this.state;
+        if(type === "audio") {
+          spells[index]["abilityVideoPath"] = info.file.response.url;
+        } else {
+          spells[index]["abilityIconPath"] = info.file.response.url;
+        }
+        this.setState({
+          spells,
+          // imageUrl: "图片地址前缀"+info.file.response.key,
+          loading: false,
+        })
+      } else {
+        this.setState({
+          imageUrl: info.file.response.url,
+          // imageUrl: "图片地址前缀"+info.file.response.key,
+          loading: false,
+        })
+      }
     }
   };
 }
