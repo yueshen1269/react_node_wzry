@@ -1,12 +1,16 @@
 import React, { Component } from "react"
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { Link, Route, Switch } from "react-router-dom"
+
 import CreateClass from "./CategoriesEdit"
 import ClassList from "./ClassList"
 import ItemEdit from "./ItemsEdit"
 import ItemsList from "./ItemsList"
 import HeroEdit from "./HeroesEdit"
 import HeroesList from "./HeroesList"
+import ArticleEdit from "./ArticleEdit/index.js"
+import ArticlesList from "./ArticleList/index.js"
+
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
@@ -21,6 +25,8 @@ export default class Main extends Component {
       currentKey[0] = "/items/create";
     } else if (currentKey[0].startsWith("/heroes/edit")) {
       currentKey[0] = "/heroes/create";
+    } else if (currentKey[0].startsWith("/articles/edit")) {
+      currentKey[0] = "/articles/create";
     }
     console.log("currentKey", currentKey)
     return (
@@ -79,6 +85,18 @@ export default class Main extends Component {
                 >英雄列表</Link>
               </Menu.Item>
             </Menu.ItemGroup>
+            <Menu.ItemGroup key="article" title="文章">
+              <Menu.Item key="/articles/create" >
+                <Link to="/articles/create"
+                // style={{color: this.props.history.location.pathname === '/articles/create' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'}}
+                >新建文章</Link>
+              </Menu.Item>
+              <Menu.Item key="/articles/list">
+                <Link to="/articles/list"
+                // style={{color: this.props.history.location.pathname === '/articles/list' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'}}
+                >文章列表</Link>
+              </Menu.Item>
+            </Menu.ItemGroup>
           </SubMenu>
         </Menu>
       </Sider>
@@ -106,6 +124,9 @@ export default class Main extends Component {
             <Route path="/heroes/create" component={HeroEdit}></Route>
             <Route path="/heroes/list" component={HeroesList}></Route>
             <Route path="/heroes/edit/:detail" component={HeroEdit}></Route>
+            <Route path="/articles/create" component={ArticleEdit}></Route>
+            <Route path="/articles/list" component={ArticlesList}></Route>
+            <Route path="/articles/edit/:detail" component={ArticleEdit}></Route>
           </Switch>
         </Content>
       </Layout>

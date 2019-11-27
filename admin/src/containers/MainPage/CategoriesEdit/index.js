@@ -14,6 +14,10 @@ class CreateClass extends Component {
   }
   componentDidMount() {
     this.fetchCategories();
+    const id = this.props.match.params.detail;
+    if(id) {
+      this.fetchCategoryById(id)
+    }
   }
   handleSubmit = (e,id) => {
     e.preventDefault();
@@ -39,13 +43,9 @@ class CreateClass extends Component {
   };
   render() {
     const { getFieldDecorator } = this.props.form;
-    const {categories} = this.state;
+    const {category, parents, categories} = this.state;
     console.log("dd:", this.props.location, "ff:", this.props.history, "gg:", this.props.match);
-    const params = this.props.match.params;
-    let id, category;
-    if(JSON.stringify(params) !== "{}") {
-      [id, category] = params.detail.split("_");
-    }
+    const id = this.props.match.params.detail;
     const formItemLayout = {
       labelCol: {
         xs: { span: 4},
@@ -66,7 +66,7 @@ class CreateClass extends Component {
       <Form {...formItemLayout} onSubmit={(e) => {this.handleSubmit(e, id)}}>
       <Form.Item label="父分类">
         {getFieldDecorator('parents', {
-
+          initialValue: parents,
 
         })(
           <Select
@@ -117,6 +117,14 @@ class CreateClass extends Component {
     </>
 
     )
+  }
+
+  fetchCategoryById = async id => {
+    const item = await Request.axios('get', `/rest/categories/${id}`);
+    this.setState({
+      parents: item.parents,
+      category: item.category
+    })
   }
 
   fetchCategories = async () => {
