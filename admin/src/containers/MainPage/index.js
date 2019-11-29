@@ -10,6 +10,8 @@ import HeroEdit from "./HeroesEdit"
 import HeroesList from "./HeroesList"
 import ArticleEdit from "./ArticleEdit/index.js"
 import ArticlesList from "./ArticleList/index.js"
+import AdEdit from "./AdEdit/index.js"
+import AdsList from "./AdsList/index.js"
 
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
@@ -19,15 +21,7 @@ export default class Main extends Component {
 
   render() {
     let currentKey = [this.props.history.location.pathname] || ["/categories/create"];
-    if(currentKey[0].startsWith("/categories/edit")) {
-      currentKey[0] = "categories/create";
-    } else if (currentKey[0].startsWith("/items/edit")) {
-      currentKey[0] = "/items/create";
-    } else if (currentKey[0].startsWith("/heroes/edit")) {
-      currentKey[0] = "/heroes/create";
-    } else if (currentKey[0].startsWith("/articles/edit")) {
-      currentKey[0] = "/articles/create";
-    }
+    currentKey[0] = currentKey[0].replace(/edit.*$/g, "create")
     console.log("currentKey", currentKey)
     return (
 
@@ -97,6 +91,18 @@ export default class Main extends Component {
                 >文章列表</Link>
               </Menu.Item>
             </Menu.ItemGroup>
+            <Menu.ItemGroup key="ad" title="广告">
+              <Menu.Item key="/ads/create" >
+                <Link to="/ads/create"
+                // style={{color: this.props.history.location.pathname === '/ads/create' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'}}
+                >新建广告</Link>
+              </Menu.Item>
+              <Menu.Item key="/ads/list">
+                <Link to="/ads/list"
+                // style={{color: this.props.history.location.pathname === '/ads/list' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'}}
+                >广告列表</Link>
+              </Menu.Item>
+            </Menu.ItemGroup>
           </SubMenu>
         </Menu>
       </Sider>
@@ -127,6 +133,9 @@ export default class Main extends Component {
             <Route path="/articles/create" component={ArticleEdit}></Route>
             <Route path="/articles/list" component={ArticlesList}></Route>
             <Route path="/articles/edit/:detail" component={ArticleEdit}></Route>
+            <Route path="/ads/create" component={AdEdit}></Route>
+            <Route path="/ads/list" component={AdsList}></Route>
+            <Route path="/ads/edit/:detail" component={AdEdit}></Route>
           </Switch>
         </Content>
       </Layout>
