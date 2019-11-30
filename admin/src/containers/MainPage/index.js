@@ -12,6 +12,8 @@ import ArticleEdit from "./ArticleEdit/index.js"
 import ArticlesList from "./ArticleList/index.js"
 import AdEdit from "./AdEdit/index.js"
 import AdsList from "./AdsList/index.js"
+import AdminUserEdit from "./AdminUserEdit"
+import AdminUsersList from "./AdminUsersList"
 
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
@@ -103,6 +105,18 @@ export default class Main extends Component {
                 >广告列表</Link>
               </Menu.Item>
             </Menu.ItemGroup>
+            <Menu.ItemGroup key="adminuser" title="管理员">
+              <Menu.Item key="/admin_users/create" >
+                <Link to="/admin_users/create"
+                // style={{color: this.props.history.location.pathname === '/ads/create' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'}}
+                >新建管理员</Link>
+              </Menu.Item>
+              <Menu.Item key="/admin_users/list">
+                <Link to="/admin_users/list"
+                // style={{color: this.props.history.location.pathname === '/ads/list' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'}}
+                >管理员列表</Link>
+              </Menu.Item>
+            </Menu.ItemGroup>
           </SubMenu>
         </Menu>
       </Sider>
@@ -136,6 +150,9 @@ export default class Main extends Component {
             <Route path="/ads/create" component={AdEdit}></Route>
             <Route path="/ads/list" component={AdsList}></Route>
             <Route path="/ads/edit/:detail" component={AdEdit}></Route>
+            <Route path="/admin_users/create" component={AdminUserEdit}></Route>
+            <Route path="/admin_users/list" component={AdminUsersList}></Route>
+            <Route path="/admin_users/edit/:detail" component={AdminUserEdit}></Route>
           </Switch>
         </Content>
       </Layout>
