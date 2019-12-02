@@ -14,8 +14,8 @@ class ItemEdit extends Component {
     this.token = null;
   }
   componentWillMount() {
-    const storage = window.localStorage;
-    this.token = JSON.parse(storage.getItem("token"));
+    // const storage = window.localStorage;
+    // this.token = JSON.parse(storage.getItem("token"));
   }
   componentDidMount() {
     // this.fetchCategories();
@@ -24,7 +24,7 @@ class ItemEdit extends Component {
     const last = JSON.parse(storage.getItem("last"));
     if(this.token === null || new Date() - new Date(last) > 3600000) {
       // this.fetchToken();
-      this.token = JSON.parse(storage.getItem("token"));
+      // this.token = JSON.parse(storage.getItem("token"));
       console.log("fetch new token:", this.token);
     }
     if(_id) {

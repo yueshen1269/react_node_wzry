@@ -23,7 +23,10 @@ export default class Main extends Component {
 
   render() {
     let currentKey = [this.props.history.location.pathname] || ["/categories/create"];
-    currentKey[0] = currentKey[0].replace(/edit.*$/g, "create")
+    currentKey[0] = currentKey[0].replace(/edit.*$/g, "create");
+    if(currentKey[0] === "/") {
+      currentKey[0] = "/categories/create"
+    }
     console.log("currentKey", currentKey)
     return (
 
@@ -135,6 +138,7 @@ export default class Main extends Component {
           }}
         >
           <Switch>
+            <Route path="/" exact component={CreateClass}></Route>
             <Route path="/categories/create" component={CreateClass}></Route>
             <Route path="/categories/list" component={ClassList}></Route>
             <Route path="/categories/edit/:detail" component={CreateClass}></Route>
