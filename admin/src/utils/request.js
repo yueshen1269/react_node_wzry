@@ -33,9 +33,9 @@ class Request {
             console.log("please login");
             localStorage.clear();
             store.dispatch({type: "UNAUTH_USER"});
-            // console.log("router:", router);
+            // console.log("router:", customHistory);
             // router.history.push("/login");
-            customHistory.push("/login");
+            customHistory.push("/login", {from: customHistory.location.pathname});
           }
         }
         return Promise.reject(err)

@@ -82,7 +82,7 @@ class Login extends Component {
             const _history = this.props.history;
             const _location = this.props.location;
             if(_location.state) {
-              _history.push(_location.state.from.pathname)
+              _history.push(_location.state.from)
             } else {
               _history.push("/");
             }

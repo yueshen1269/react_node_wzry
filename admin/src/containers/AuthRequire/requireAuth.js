@@ -33,7 +33,7 @@ export default function(ComposedComponent) {
       return (
         (!window.localStorage.getItem("token")) ? <Redirect to={{
           pathname: "/login",
-          state: {from: this.props.location},
+          state: {from: this.props.location.pathname},
         }} /> :
         <ComposedComponent {...this.props} />
       )
