@@ -1,16 +1,16 @@
 import axios from "axios"
 import { message } from "antd";
-import { BrowserRouter as Router } from 'react-router-dom'
-const router = new Router();
+import {BrowserRouter} from "react-router-dom";
+const router = new BrowserRouter();
 
 class Request {
-  static axiosConfigInit() {
+  static axiosConfigInit(store) {
     if(process.env.NODE_ENV !== "production") {
       axios.defaults.baseURL = "http://localhost:3001/admin/api";
       axios.interceptors.request.use(function (config) {
         // Do something before request is sent
         if (localStorage.token) {
-          config.headers.Authorization = 'Bearer ' + localStorage.token
+          config.headers.Authorization = "Bearer " + localStorage.token
         }
         return config;
       }, function (error) {
@@ -24,11 +24,15 @@ class Request {
         if (err.response.data.message) {
           message.error(err.response.data.message);
           if (err.response.status === 401) {
-            // router.history.push('/login');
-            window.location.pathname = '/login';
+            // router.history.push("/login");
+            // window.location.pathname = "/login";
+            console.log("please login");
+            localStorage.clear();
+            store.dispatch({type: "UNAUTH_USER"});
+            // console.log("router:", router);
+            // router.history.push("/login");
           }
         }
-        console.log("err: dd", err);
         return Promise.reject(err)
       })
 

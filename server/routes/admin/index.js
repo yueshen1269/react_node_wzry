@@ -44,7 +44,7 @@ module.exports = app => {
   const authMiddleware = require("../../middleware/auth");
   const resourceMiddleware = require("../../middleware/resource");
 
-  app.use("/admin/api/rest/:resource", resourceMiddleware(), authMiddleware(), router);
+  app.use("/admin/api/rest/:resource", authMiddleware(), resourceMiddleware(), router);
 
   app.post("/admin/api/login", async (req, res) => {
     const { username : name, password } = req.body;

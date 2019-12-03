@@ -1,8 +1,13 @@
 
 import { combineReducers } from "redux"
 
-function aa(state={a:1, b:2}, action) {
-  return state
+function session( state = {isLogged: true}, action) {
+  if(action.type === "UNAUTH_USER") {
+    state.isLogged = false;
+  } else if(action.type === "LOGIN_SUCCESSFULLY") {
+    state.isLogged = true;
+  }
+  return state;
 }
 
 
@@ -12,5 +17,5 @@ function aa(state={a:1, b:2}, action) {
 
 
 export default combineReducers({
-  aa,
+  session,
 })

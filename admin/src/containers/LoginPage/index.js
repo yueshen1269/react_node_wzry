@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { Card, Form, message, Button, Input } from 'antd';
 import Request from "../../utils/request"
-
+import store from "../../redux/store"
 
 class Login extends Component {
 
@@ -11,6 +11,9 @@ class Login extends Component {
       username: "",
       password: "",
     }
+  }
+  componentDidMount(){
+    console.log("mount login page", this.props);
   }
   render() {
     const formItemLayout = {
@@ -32,7 +35,7 @@ class Login extends Component {
     return (
       <Card title="login" style={{ width: 500, marginTop: "10rem", marginLeft: "auto", marginRight: "auto" }}>
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-        <Form.Item label="名称" hasFeedback>
+        <Form.Item label="名称">
           {getFieldDecorator('username', {
             rules: [
               {
@@ -43,7 +46,7 @@ class Login extends Component {
             initialValue: username || "",
           })(<Input  />)}
         </Form.Item>
-        <Form.Item label="密码" hasFeedback>
+        <Form.Item label="密码">
           {getFieldDecorator('password', {
             rules: [
               {
@@ -59,7 +62,7 @@ class Login extends Component {
             type="primary"
             htmlType="submit"
           >
-            保存
+            登录
           </Button>
         </Form.Item>
         </Form>
@@ -75,8 +78,14 @@ class Login extends Component {
           res = await Request.axios('post', '/login', values);
           if(res) {
             localStorage.setItem("token", res.token);
-            console.log("res:", res.token);
-            this.props.history.push("/")
+            store.dispatch({type: "LOGIN_SUCCESSFULLY"});
+            const _history = this.props.history;
+            const _location = this.props.location;
+            if(_location.state.from) {
+              _history.push(_location.state.from.pathname)
+            } else {
+              _history.push("/");
+            }
           } else {
             message.error(res.data)
           }
