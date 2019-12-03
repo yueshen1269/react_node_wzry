@@ -1,6 +1,10 @@
 import axios from "axios"
 import { message } from "antd";
 import {BrowserRouter} from "react-router-dom";
+// import { createBrowserHistory } from 'history';
+
+// const customHistory = createBrowserHistory();
+import customHistory from "../history"
 const router = new BrowserRouter();
 
 class Request {
@@ -31,6 +35,7 @@ class Request {
             store.dispatch({type: "UNAUTH_USER"});
             // console.log("router:", router);
             // router.history.push("/login");
+            customHistory.push("/login");
           }
         }
         return Promise.reject(err)

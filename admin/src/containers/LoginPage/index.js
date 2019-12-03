@@ -81,7 +81,7 @@ class Login extends Component {
             store.dispatch({type: "LOGIN_SUCCESSFULLY"});
             const _history = this.props.history;
             const _location = this.props.location;
-            if(_location.state.from) {
+            if(_location.state) {
               _history.push(_location.state.from.pathname)
             } else {
               _history.push("/");
