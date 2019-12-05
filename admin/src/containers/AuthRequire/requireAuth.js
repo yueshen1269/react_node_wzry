@@ -29,7 +29,6 @@ export default function(ComposedComponent) {
     // }
 
     render() {
-      console.log("session.isLogged", this.props.session.isLogged, this.logged);
       return (
         (!window.localStorage.getItem("token")) ? <Redirect to={{
           pathname: "/login",
