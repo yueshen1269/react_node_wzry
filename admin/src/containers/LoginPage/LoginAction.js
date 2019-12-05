@@ -7,28 +7,48 @@ import {
 } from "../../redux/actions"
 
 const UNAUTH_USER = "UNAUTH_USER";
-const LOG_IN = "LOG_IN";
+
+const LOGIN_LOGIN = "LOGIN_LOGIN";
+const LOGIN_LOGIN_SUCCESS = "LOGIN_LOGIN_SUCCESS";
+const LOGIN_LOGIN_FAIL = "LOGIN_LOGIN_FAIL";
+
 
 const login = (params = {}) => async dispatch => {
   const {username, password, from} = params;
   if(username && password) {
-    dispatch(fetchStart());
+    dispatch(loginLogin());
     const res = await Request.axios("post", "/login", {username, password});
-    if(res) {
-      dispatch(FETCH_POSTS_SUCCESS(res));
-      localStorage.setItem("token", res.token);
-      const _history = this.props.history;
-      const _location = this.props.location;
-      if(_location.state) {
-        _history.push(_location.state.from)
+    try {
+      if(res) {
+        dispatch(loginLoginSuccess(res));
+        localStorage.setItem("token", res.token);
+        if(from) {
+          _history.push(from)
+        } else {
+          _history.push("/");
+        }
       } else {
-        _history.push("/");
-      }
-    } else {
 
-    }
+      }
+    } catch(e) {
+        dispatch(loginLoginFail(e));
+      }
   }
 }
+
+const loginLogin = () => ({
+  type: LOGIN_LOGIN
+});
+
+const loginLoginSuccess = (res) => ({
+  type: LOGIN_LOGIN,
+  res
+});
+
+const loginLoginFail = (err) => ({
+  type: LOGIN_LOGIN_FAIL,
+  err
+});
 
 const validateAuthFailed = (from = "/") => ({
   type: UNAUTH_USER,
@@ -37,7 +57,12 @@ const validateAuthFailed = (from = "/") => ({
 
 export {
   UNAUTH_USER,
-  LOG_IN,
+  LOGIN_LOGIN,
+  LOGIN_LOGIN_FAIL,
+  LOGIN_LOGIN_SUCCESS,
   login,
   validateAuthFailed,
+  loginLogin,
+  loginLoginFail,
+  loginLoginSuccess,
 }
