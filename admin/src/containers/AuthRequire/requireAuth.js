@@ -1,12 +1,12 @@
 import React, { Component } from "react"
 import { connect} from "react-redux"
 import {Route, Redirect} from 'react-router-dom';
+import MainPage from "../MainPage"
 
 export default function(ComposedComponent) {
   class RequireAuth extends Component {
 
     render() {
-      console.log("authcomponent",ComposedComponent);
       return (
         (!window.localStorage.getItem("token")) ? <Redirect to={{
           pathname: "/login",

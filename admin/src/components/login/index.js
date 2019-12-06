@@ -10,6 +10,14 @@ class Login extends Component {
       password: "",
     }
   }
+
+  componentWillMount() {
+    // 已登录用户不能手动跳转到登录页
+    if(window.localStorage.getItem("token")) {
+      this.props.history.push("/");
+    }
+  }
+
   componentDidMount(){
     console.log("mount login page", this.props);
   }

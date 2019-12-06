@@ -1,31 +1,23 @@
 
 import { combineReducers } from "redux"
 import {
-  FETCH_POSTS_REQUEST,
-  FETCH_POSTS_FAILURE,
-  FETCH_POSTS_SUCCESS,
-  fetchStart,
-  fetchEndWithFailure,
-  fetchEndWithSuccess,
+  OFFLINE_MESSAGE,
+  showOfflineMessageAction,
+  canShowOffline,
 } from "./actions"
 
-import auth from "../containers/LoginPage/LoginReducer"
+import auth from "../containers/LoginPage/LoginReducer";
+import categoryState from "../containers/MainPage/CategoriesEdit/CategoryEditReducer";
 
-const requestObj = {
-  loading: false,
-  response: null,
-  err: null,
-  code: 200,
+const messageObj = {
+  offline: false,
 }
 
-function request(state = requestObj, action) {
+function message(state = messageObj, action) {
   switch (action.type) {
-    case FETCH_POSTS_REQUEST:
-      return {...requestObj, loading: true};
-    case FETCH_POSTS_FAILURE:
-      return {...requestObj, error: action.error, loading: false};
-    case FETCH_POSTS_SUCCESS:
-      return {...requestObj, response: action.response, loading: false};
+    case OFFLINE_MESSAGE:
+      return {...messageObj, offline: true};
+
     default:
       return state;
   }
@@ -37,6 +29,7 @@ function request(state = requestObj, action) {
 
 
 export default combineReducers({
-  request,
+  message,
   auth,
+  categoryState,
 })

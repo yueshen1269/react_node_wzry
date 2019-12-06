@@ -1,27 +1,13 @@
-const FETCH_POSTS_REQUEST = "FETCH_POSTS_REQUEST";
-const FETCH_POSTS_FAILURE = "FETCH_POSTS_FAILURE";
-const FETCH_POSTS_SUCCESS = "FETCH_POSTS_SUCCESS";
+const OFFLINE_MESSAGE = "OFFLINE_MESSAGE";
 
-const fetchStart = () => ({
-  type: FETCH_POSTS_REQUEST
+
+const showOfflineMessageAction = () => ({
+  type: OFFLINE_MESSAGE
 });
 
-const fetchEndWithFailure = (error) => ({
-  type: FETCH_POSTS_FAILURE,
-  error
-});
-
-const fetchEndWithSuccess = (response) => ({
-  type: FETCH_POSTS_SUCCESS,
-  response,
-});
 
 
 export {
-  FETCH_POSTS_REQUEST,
-  FETCH_POSTS_FAILURE,
-  FETCH_POSTS_SUCCESS,
-  fetchStart,
-  fetchEndWithFailure,
-  fetchEndWithSuccess,
+  OFFLINE_MESSAGE,
+  showOfflineMessageAction,
 }

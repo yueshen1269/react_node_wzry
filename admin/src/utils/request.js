@@ -2,6 +2,7 @@ import axios from "axios"
 import { message } from "antd";
 import {BrowserRouter} from "react-router-dom";
 import {validateAuthFailed} from "../containers/LoginPage/LoginAction"
+import {canShowOffline} from "../redux/actions"
 // import { createBrowserHistory } from 'history';
 
 // const customHistory = createBrowserHistory();
