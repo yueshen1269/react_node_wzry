@@ -8,7 +8,7 @@ import {
 import { Router } from "react-router"
 import * as serviceWorker from "./serviceWorker";
 import Register from "./containers/RegisterPage"
-import Login from "./containers/LoginPage"
+import LoginPage from "./containers/LoginPage"
 import Main from "./containers/MainPage"
 import { Provider } from "react-redux";
 import store from "./redux/store"
@@ -23,7 +23,7 @@ ReactDOM.render((
      <Router history={customHistory}>
       <Switch>
         <Route path="/register" exact component={Register}></Route>
-        <Route path="/login" exact component={Login}></Route>
+        <Route path="/login" exact component={LoginPage}></Route>
         <Route component={AuthRequire(Main)}></Route>
       </Switch>
     </Router>

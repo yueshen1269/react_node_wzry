@@ -1,4 +1,6 @@
 import Request from "../../utils/request"
+import to from 'await-to-js';
+import customHistory from "../../history"
 import {
   fetchStart,
   fetchEndWithFailure,
@@ -13,26 +15,23 @@ const LOGIN_LOGIN_SUCCESS = "LOGIN_LOGIN_SUCCESS";
 const LOGIN_LOGIN_FAIL = "LOGIN_LOGIN_FAIL";
 
 
-const login = (params = {}) => async dispatch => {
+const loginAction = (params = {}) => async dispatch => {
   const {username, password, from} = params;
   if(username && password) {
     dispatch(loginLogin());
-    const res = await Request.axios("post", "/login", {username, password});
-    try {
-      if(res) {
-        dispatch(loginLoginSuccess(res));
-        localStorage.setItem("token", res.token);
-        if(from) {
-          _history.push(from)
-        } else {
-          _history.push("/");
-        }
+    const [ err, res ] = await to(Request.axios('post', '/login', {username, password}));
+    if(err) {
+      return dispatch(loginLoginFail(err));
+    }
+    if(res) {
+      dispatch(loginLoginSuccess(res));
+      localStorage.setItem("token", res.token);
+      if(from) {
+        customHistory.push(from)
       } else {
-
+        customHistory.push("/");
       }
-    } catch(e) {
-        dispatch(loginLoginFail(e));
-      }
+    }
   }
 }
 
@@ -41,7 +40,7 @@ const loginLogin = () => ({
 });
 
 const loginLoginSuccess = (res) => ({
-  type: LOGIN_LOGIN,
+  type: LOGIN_LOGIN_SUCCESS,
   res
 });
 
@@ -60,7 +59,7 @@ export {
   LOGIN_LOGIN,
   LOGIN_LOGIN_FAIL,
   LOGIN_LOGIN_SUCCESS,
-  login,
+  loginAction,
   validateAuthFailed,
   loginLogin,
   loginLoginFail,

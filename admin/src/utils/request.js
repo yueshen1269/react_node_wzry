@@ -1,6 +1,7 @@
 import axios from "axios"
 import { message } from "antd";
 import {BrowserRouter} from "react-router-dom";
+import {validateAuthFailed} from "../containers/LoginPage/LoginAction"
 // import { createBrowserHistory } from 'history';
 
 // const customHistory = createBrowserHistory();
@@ -32,7 +33,7 @@ class Request {
             // window.location.pathname = "/login";
             console.log("please login");
             localStorage.clear();
-            store.dispatch({type: "UNAUTH_USER"});
+            store.dispatch(validateAuthFailed(customHistory.location.pathname));
             // console.log("router:", customHistory);
             // router.history.push("/login");
             customHistory.push("/login", {from: customHistory.location.pathname});
@@ -56,6 +57,7 @@ class Request {
         resolve(response);
         console.log("%d,收到响应数据：%o",index, response);
       }).catch((error) => {
+        console.log("&&&&", error, error.response);
         if(error.response) {
           reject(error.response.data);
         } else {

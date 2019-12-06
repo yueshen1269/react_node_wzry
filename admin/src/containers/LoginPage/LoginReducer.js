@@ -4,7 +4,7 @@ import {
   LOGIN_LOGIN,
   LOGIN_LOGIN_FAIL,
   LOGIN_LOGIN_SUCCESS,
-  login,
+  loginAction,
   validateAuthFailed,
   loginLogin,
   loginLoginFail,
@@ -12,7 +12,7 @@ import {
 } from "./LoginAction"
 
 const authObj = {
-  isloading: false,
+  isLoading: false,
   res: null,
   err: null,
   // code: 200,
@@ -23,15 +23,15 @@ const authObj = {
 function auth(state = authObj, action) {
   switch(action.type) {
     case LOGIN_LOGIN:
-      return {...authObj, isloading: true};
+      return {...state, isLoading: true};
     case LOGIN_LOGIN_SUCCESS:
-      return {...authObj, isloading: false, res: action.res, isLogged: true};
+      return {...state, isLoading: false, res: action.res, isLogged: true};
     case LOGIN_LOGIN_FAIL:
-      return {...authObj, isloading: false, err: action.err};
+      return {...state, isLoading: false, err: action.err};
     case UNAUTH_USER:
-      return {...authObj, isLogged: false,};
+      return {...state, isLogged: false,};
     default:
-      return authObj;
+      return state;
   }
 }
 
