@@ -6,7 +6,7 @@ import {withRouter} from "react-router-dom"
 import CategoryEdit from "../../../components/Category/CategoryEdit"
 import {fetchCategoryByIDAction, fetchCategoriesAction, addAndUpdateCategoryAction} from "./CategoryEditAction"
 const mapStateToProps = (state) => ({
-  category: state.categoryState,
+  categoryState: state.categoryState,
 });
 
 const mapDispatchToProps = (dispatch) => ({

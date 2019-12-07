@@ -8,7 +8,7 @@ class CategoryEdit extends Component {
   constructor(props) {
     super(props);
     this.state={
-      categories: []
+      // categories: []
     }
   }
   componentDidMount() {
@@ -44,8 +44,10 @@ class CategoryEdit extends Component {
     });
   };
   render() {
+    console.log("this.props:", this.props.categoryState)
     const { getFieldDecorator } = this.props.form;
-    const categoryState = this.props.categoryState || {item: {}, items:[]};
+    const categoryState = this.props.categoryState;
+    console.log("categoryState", categoryState);
     const {item, items} = categoryState;
     const {parents, category, } = item;
     console.log("dd:", this.props.location, "ff:", this.props.history, "gg:", this.props.match);
@@ -70,7 +72,7 @@ class CategoryEdit extends Component {
       <Form {...formItemLayout} onSubmit={(e) => {this.handleSubmit(e, id)}}>
       <Form.Item label="父分类">
         {getFieldDecorator('parents', {
-          initialValue: parents,
+          initialValue: parents&&parents.category || "",
 
         })(
           <Select
