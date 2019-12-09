@@ -1,6 +1,6 @@
-import Request from "../../../utils/request"
+import Request from "@/utils/request"
 import to from 'await-to-js';
-import customHistory from "../../../history"
+import customHistory from "@/history"
 
 const FETCH_CATEGORIES = "FETCH_CATEGORIES";
 const FETCH_CATEGORIES_SUCCESS = "FETCH_CATEGORIES_SUCCESS";

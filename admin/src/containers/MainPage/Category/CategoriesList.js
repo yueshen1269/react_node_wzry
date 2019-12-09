@@ -1,7 +1,7 @@
 import {connect} from "react-redux"
 import {withRouter} from "react-router-dom"
 
-import CategoriesList from "../../../components/Category/CategoriesList"
+import CategoriesList from "@/components/Category/CategoriesList"
 import {handleEditAction, handleDeleteAction, fetchCategoriesFromStoreAction} from "./CategoryAction"
 
 const mapStateToProps = (state) => ({
