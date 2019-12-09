@@ -5,10 +5,7 @@ import {
   EDIT_CATEGORY,
   EDIT_CATEGORY_SUCCESS,
   EDIT_CATEGORY_FAIL,
-  fetchCategoryByIDAction,
-  fetchCategoriesAction,
   SET_CATEGORY_ITEM,
-  setCategoryItem,
 } from "./CategoryEditAction"
 
 const categoryObj = {
@@ -21,7 +18,7 @@ const categoryObj = {
 };
 
 
-const categoryState = (state = categoryObj, action) => {
+const categoryReducer = (state = categoryObj, action) => {
   switch(action.type) {
     case FETCH_CATEGORIES :
       return {...state, isLoading: true};
@@ -42,4 +39,4 @@ const categoryState = (state = categoryObj, action) => {
   }
 }
 
-export default categoryState;
+export default categoryReducer;

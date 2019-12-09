@@ -12,34 +12,18 @@ class CategoryEdit extends Component {
     }
   }
   componentDidMount() {
-    const {fetchCategoryByIDDispatch, fetchCategoriesDispatch, match:{params:{detail:id}}} = this.props;
-    fetchCategoriesDispatch();
+    const {fetchCategoryByID, fetchCategories, match:{params:{detail:id}}} = this.props;
+    fetchCategories();
     // const id = this.props.match.params.detail;
     if(id) {
-      fetchCategoryByIDDispatch(id);
+      fetchCategoryByID(id);
     }
   }
   handleSubmit = (e,id) => {
     e.preventDefault();
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        // TODO: dispatch
-        // let res;
-        // try {
-        //   if(id) {
-        //     res = await Request.axios('put', `/rest/categories/${id}`, values);
-        //   } else {
-        //     res = await Request.axios('post', '/rest/categories', values);
-        //   }
-        //   if(res) {
-        //     this.props.history.push("/categories/list")
-        //   } else {
-        //     message.error(res.data)
-        //   }
-        // } catch (error) {
-        //   message.error(error);
-        // }
-        this.props.addAndUpdateCategoryDispatch(values, id);
+        this.props.addAndUpdateCategory(values, id);
       }
     });
   };
@@ -72,7 +56,7 @@ class CategoryEdit extends Component {
       <Form {...formItemLayout} onSubmit={(e) => {this.handleSubmit(e, id)}}>
       <Form.Item label="父分类">
         {getFieldDecorator('parents', {
-          initialValue: parents&&parents.category || "",
+          initialValue: parents && parents._id || "",
 
         })(
           <Select

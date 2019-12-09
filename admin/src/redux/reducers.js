@@ -7,7 +7,7 @@ import {
 } from "./actions"
 
 import auth from "../containers/LoginPage/LoginReducer";
-import categoryState from "../containers/MainPage/CategoriesEdit/CategoryEditReducer";
+import categoryReducer from "../containers/MainPage/CategoriesEdit/CategoryEditReducer";
 
 const messageObj = {
   offline: false,
@@ -31,5 +31,5 @@ function message(state = messageObj, action) {
 export default combineReducers({
   message,
   auth,
-  categoryState,
+  categoryState: categoryReducer,
 })

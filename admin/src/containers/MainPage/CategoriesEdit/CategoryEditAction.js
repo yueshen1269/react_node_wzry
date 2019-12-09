@@ -10,59 +10,55 @@ const EDIT_CATEGORY = "EDIT_CATEGORY";
 const EDIT_CATEGORY_SUCCESS = "EDIT_CATEGORY_SUCCESS";
 const EDIT_CATEGORY_FAIL = "EDIT_CATEGORY_FAIL";
 const SET_CATEGORY_ITEM = "SET_CATEGORY_ITEM";
-// const CLEAR_CATEGORY_ITEM = "CLEAR_CATEGORY_ITEM";
 
-const editCategory = () => ({
+const editCategoryAction = () => ({
   type: EDIT_CATEGORY,
 });
-const editCategorySuccess = (newCategory) => ({
+const editCategorySuccessAction = (newCategory) => ({
   type: EDIT_CATEGORY_SUCCESS,
   newCategory,
 });
-const editCategoryFail = (err) => ({
+const editCategoryFailAction = (err) => ({
   type: EDIT_CATEGORY_FAIL,
   err,
 });
-const fetchCategories = () => ({
+const fetchCategoriesAction = () => ({
   type: FETCH_CATEGORIES,
 });
-const fetchCategoriesSuccess = (categories) => ({
+const fetchCategoriesSuccessAction = (categories) => ({
   type: FETCH_CATEGORIES_SUCCESS,
   categories,
 });
-const fetchCategoriesFail = (err) => ({
+const fetchCategoriesFailAction = (err) => ({
   type: FETCH_CATEGORIES_FAIL,
   err,
 });
-const setCategoryItem = (item) => ({
+const setCategoryItemAction = (item) => ({
   type: SET_CATEGORY_ITEM,
   item,
 });
-// const clearCategoryItem = () => ({
-//   type: CLEAR_CATEGORY_ITEM,
-//   item: {},
-// });
+
 const fetchCategoryByIDAction = (id) => async (dispatch, getState) => {
   const categories = getState().categoryState;
   const category =  categories.items.find(category => category._id === id) || {};
   console.log("id^^^",category);
-  dispatch(setCategoryItem(category));
+  dispatch(setCategoryItemAction(category));
 }
 
-const fetchCategoriesAction = () => async dispatch => {
-  dispatch(fetchCategories());
-  dispatch(setCategoryItem({}));
+const fetchAndSaveCategoriesAction = () => async dispatch => {
+  dispatch(fetchCategoriesAction());
+  dispatch(setCategoryItemAction({}));
   const [err, categories] = await to(Request.axios('get', '/rest/categories'));
   if(err) {
-    return dispatch(fetchCategoriesFail(err));
+    return dispatch(fetchCategoriesFailAction(err));
   }
   if(categories) {
-    return dispatch(fetchCategoriesSuccess(categories));
+    return dispatch(fetchCategoriesSuccessAction(categories));
   }
 };
 
 const addAndUpdateCategoryAction = (values, id) => async dispatch => {
-  dispatch(editCategory());
+  dispatch(editCategoryAction());
   let res, err;
   if(id) {
     [err, res] = await to(Request.axios('put', `/rest/categories/${id}`, values));
@@ -70,11 +66,11 @@ const addAndUpdateCategoryAction = (values, id) => async dispatch => {
     [err, res] = await to(Request.axios('post', '/rest/categories', values));
   }
   if(err) {
-    return dispatch(editCategoryFail(err));
+    return dispatch(editCategoryFailAction(err));
   }
   if(res) {
-    dispatch(editCategorySuccess(res));
-    dispatch(fetchCategoriesAction());
+    dispatch(editCategorySuccessAction(res));
+    dispatch(fetchAndSaveCategoriesAction());
     customHistory.push("/categories/list");
   }
 }
@@ -86,9 +82,8 @@ export {
   EDIT_CATEGORY,
   EDIT_CATEGORY_SUCCESS,
   EDIT_CATEGORY_FAIL,
-  fetchCategoriesAction,
+  fetchAndSaveCategoriesAction,
   fetchCategoryByIDAction,
   addAndUpdateCategoryAction,
   SET_CATEGORY_ITEM,
-  setCategoryItem,
 }

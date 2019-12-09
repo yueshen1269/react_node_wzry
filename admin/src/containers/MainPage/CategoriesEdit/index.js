@@ -4,19 +4,19 @@ import {connect} from "react-redux"
 import {withRouter} from "react-router-dom"
 
 import CategoryEdit from "../../../components/Category/CategoryEdit"
-import {fetchCategoryByIDAction, fetchCategoriesAction, addAndUpdateCategoryAction} from "./CategoryEditAction"
+import {fetchCategoryByIDAction, fetchAndSaveCategoriesAction, addAndUpdateCategoryAction} from "./CategoryEditAction"
 const mapStateToProps = (state) => ({
   categoryState: state.categoryState,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchCategoryByIDDispatch(...args) {
+  fetchCategoryByID(...args) {
     dispatch(fetchCategoryByIDAction(...args));
   },
-  fetchCategoriesDispatch(...args) {
-    dispatch(fetchCategoriesAction(...args));
+  fetchCategories(...args) {
+    dispatch(fetchAndSaveCategoriesAction(...args));
   },
-  addAndUpdateCategoryDispatch(...args) {
+  addAndUpdateCategory(...args) {
     dispatch(addAndUpdateCategoryAction(...args));
   }
 })
