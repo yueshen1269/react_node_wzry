@@ -1,10 +1,10 @@
 
 import React, { Component } from "react"
-import Request from "../../../utils/request"
+// import Request from "../../utils/request"
 import { Table, Divider, Popconfirm, message } from 'antd';
 
 
-export default class ClassList extends Component {
+export default class CategoriesList extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,30 +43,34 @@ export default class ClassList extends Component {
     ];
   }
   async componentWillMount() {
-    const data = await Request.axios('get', '/rest/categories');
-    this.setState({data})
+    // const data = await Request.axios('get', '/rest/categories');
+    // this.setState({data})
+    this.props.fetchCategoriesFromStore();
   }
   render() {
-    const {data} = this.state;
+    // const {data} = this.state;
+    const {items} = this.props.categoryState;
     return (
     <>
       <Table
         rowKey = {record => record._id}
         columns={this.columns}
-        dataSource={data}
+        dataSource={items}
       />
     </>)
   }
 
   handleEdit = (record) => {
     let {_id} = record;
-    this.props.history.push(`/categories/edit/${_id}`)
+    this.props.handleEdit(_id);
+    // this.props.history.push(`/categories/edit/${_id}`)
   }
 
   handleDelete = async (_id) => {
-    await Request.axios('delete', `/rest/categories/${_id}`);
-    const data = await Request.axios('get', '/rest/categories');
-    this.setState({data});
-    message.success("delete successfully")
+    this.props.handleDelete(_id);
+    // await Request.axios('delete', `/rest/categories/${_id}`);
+    // const data = await Request.axios('get', '/rest/categories');
+    // this.setState({data});
+    // message.success("delete successfully")
   }
 }

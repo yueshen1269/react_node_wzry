@@ -4,7 +4,7 @@ import {connect} from "react-redux"
 import {withRouter} from "react-router-dom"
 
 import CategoryEdit from "../../../components/Category/CategoryEdit"
-import {fetchCategoryByIDAction, fetchAndSaveCategoriesAction, addAndUpdateCategoryAction} from "./CategoryEditAction"
+import {fetchCategoryByIDAction, fetchAndSaveCategoriesAction, addAndUpdateCategoryAction} from "./CategoryAction"
 const mapStateToProps = (state) => ({
   categoryState: state.categoryState,
 });

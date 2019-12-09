@@ -11,8 +11,44 @@ const EDIT_CATEGORY_SUCCESS = "EDIT_CATEGORY_SUCCESS";
 const EDIT_CATEGORY_FAIL = "EDIT_CATEGORY_FAIL";
 const SET_CATEGORY_ITEM = "SET_CATEGORY_ITEM";
 
-const editCategoryAction = () => ({
+const MODIFY_CATEGORY = "MODIFY_CATEGORY";
+const DELETE_CATEGORY = "DELETE_CATEGORY";
+
+const editCategoryAction = (id) => dispatch => ({
   type: EDIT_CATEGORY,
+  id,
+});
+
+const deleteCategoryAction = (id) => dispatch => ({
+  type: DELETE_CATEGORY,
+  id,
+});
+
+const fetchCategoriesFromStoreAction = () => (dispatch, getState) => {
+  const categoryState = getState().categoryState;
+  if(categoryState.items.length) {
+    return true;
+  }
+  dispatch(fetchAndSaveCategoriesAction());
+  return true;
+};
+
+const handleEditAction = (id) => (dispatch) => {
+  dispatch(modifyCategoryAction());
+  customHistory.push(`/categories/edit/${id}`)
+};
+
+const handleDeleteAction = (id) => async (dispatch) => {
+  dispatch(deleteCategoryAction());
+  const [err, res] = await to(Request.axios('delete', `/rest/categories/${id}`));
+  if(err) return;
+  if(res) {
+    dispatch(fetchAndSaveCategoriesAction());
+  }
+};
+
+const modifyCategoryAction = () => ({
+  type: MODIFY_CATEGORY,
 });
 const editCategorySuccessAction = (newCategory) => ({
   type: EDIT_CATEGORY_SUCCESS,
@@ -82,8 +118,11 @@ export {
   EDIT_CATEGORY,
   EDIT_CATEGORY_SUCCESS,
   EDIT_CATEGORY_FAIL,
+  SET_CATEGORY_ITEM,
   fetchAndSaveCategoriesAction,
   fetchCategoryByIDAction,
   addAndUpdateCategoryAction,
-  SET_CATEGORY_ITEM,
+  handleEditAction,
+  handleDeleteAction,
+  fetchCategoriesFromStoreAction,
 }

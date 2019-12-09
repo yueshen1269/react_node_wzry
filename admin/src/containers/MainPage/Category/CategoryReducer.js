@@ -6,7 +6,7 @@ import {
   EDIT_CATEGORY_SUCCESS,
   EDIT_CATEGORY_FAIL,
   SET_CATEGORY_ITEM,
-} from "./CategoryEditAction"
+} from "./CategoryAction"
 
 const categoryObj = {
   isLoading: true,

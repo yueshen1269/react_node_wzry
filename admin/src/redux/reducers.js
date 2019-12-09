@@ -7,7 +7,7 @@ import {
 } from "./actions"
 
 import auth from "../containers/LoginPage/LoginReducer";
-import categoryReducer from "../containers/MainPage/CategoriesEdit/CategoryEditReducer";
+import categoryReducer from "../containers/MainPage/Category/CategoryReducer";
 
 const messageObj = {
   offline: false,

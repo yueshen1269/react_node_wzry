@@ -2,8 +2,8 @@ import React, { Component } from "react"
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 import { Link, Route, Switch } from "react-router-dom"
 
-import CreateClass from "./CategoriesEdit"
-import ClassList from "./ClassList"
+import CategoryEdit from "./Category/CategoryEdit"
+import CategoriesList from "./Category/CategoriesList"
 import ItemEdit from "./ItemsEdit"
 import ItemsList from "./ItemsList"
 import HeroEdit from "./HeroesEdit"
@@ -138,10 +138,10 @@ export default class Main extends Component {
           }}
         >
           <Switch>
-            <Route path="/" exact component={CreateClass}></Route>
-            <Route path="/categories/create" component={CreateClass}></Route>
-            <Route path="/categories/list" component={ClassList}></Route>
-            <Route path="/categories/edit/:detail" component={CreateClass}></Route>
+            <Route path="/" exact component={CategoryEdit}></Route>
+            <Route path="/categories/create" component={CategoryEdit}></Route>
+            <Route path="/categories/list" component={CategoriesList}></Route>
+            <Route path="/categories/edit/:detail" component={CategoryEdit}></Route>
             <Route path="/items/create" component={ItemEdit}></Route>
             <Route path="/items/list" component={ItemsList}></Route>
             <Route path="/items/edit/:detail" component={ItemEdit}></Route>
