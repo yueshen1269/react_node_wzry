@@ -1,11 +1,14 @@
 import React, { Component } from "react"
 import { connect} from "react-redux"
 import {Route, Redirect} from 'react-router-dom';
-import MainPage from "../MainPage"
+import { message} from "antd"
 
 export default function(ComposedComponent) {
   class RequireAuth extends Component {
-
+    componentWillMount() {
+      console.log("token:",window.localStorage.getItem("token"));
+      (!window.localStorage.getItem("token")) && message.info("请先登录");
+    }
     render() {
       return (
         (!window.localStorage.getItem("token")) ? <Redirect to={{

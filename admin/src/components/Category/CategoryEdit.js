@@ -1,5 +1,6 @@
 
 import React, { Component, Fragment } from "react"
+import PropTypes from "prop-types"
 import { Form, Input, Button, message, Select } from "antd"
 
 const {Option} = Select;
@@ -28,10 +29,8 @@ class CategoryEdit extends Component {
     });
   };
   render() {
-    console.log("this.props:", this.props.categoryState)
     const { getFieldDecorator } = this.props.form;
     const categoryState = this.props.categoryState;
-    console.log("categoryState", categoryState);
     const {item, items} = categoryState;
     const {parents, category, } = item;
     console.log("dd:", this.props.location, "ff:", this.props.history, "gg:", this.props.match);
@@ -109,19 +108,20 @@ class CategoryEdit extends Component {
     )
   }
 
-  // fetchCategoryById = async id => {
-  //   const item = await Request.axios('get', `/rest/categories/${id}`);
-  //   this.setState({
-  //     parents: item.parents,
-  //     category: item.category
-  //   })
-  // }
-
-  // fetchCategories = async () => {
-  //   const categories = await Request.axios('get', '/rest/categories');
-  //   console.log("categoryie", categories);
-  //   this.setState({categories})
-  // }
 }
 
 export default Form.create()(CategoryEdit);
+
+CategoryEdit.propTypes = {
+  fetchCategoryByID: PropTypes.func,
+  fetchCategories: PropTypes.func,
+  addAndUpdateCategory: PropTypes.func,
+  categoryState: PropTypes.object,
+}
+
+CategoryEdit.defaultProps = {
+  fetchCategoryByID() {},
+  fetchCategories() {},
+  addAndUpdateCategory() {},
+  categoryState: {},
+}

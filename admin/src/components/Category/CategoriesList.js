@@ -1,6 +1,6 @@
 
 import React, { Component } from "react"
-// import Request from "../../utils/request"
+import PropTypes from "prop-types"
 import { Table, Divider, Popconfirm, message } from 'antd';
 
 
@@ -73,4 +73,18 @@ export default class CategoriesList extends Component {
     // this.setState({data});
     // message.success("delete successfully")
   }
+}
+
+CategoriesList.propTypes = {
+  handleEdit: PropTypes.func,
+  handleDelete: PropTypes.func,
+  fetchCategoriesFromStore: PropTypes.func,
+  categoryState: PropTypes.object,
+}
+
+CategoriesList.defaultProps = {
+  handleEdit() {},
+  handleDelete() {},
+  fetchCategoriesFromStore() {},
+  categoryState: {},
 }
