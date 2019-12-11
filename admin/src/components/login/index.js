@@ -83,19 +83,6 @@ class Login extends Component {
         let from = null;
         if(_state) from = _state.from;
         this.props.login(Object.assign({}, values, {from}));
-          // const [ err, res ] = await to(Request.axios('post', '/login', values));
-          // if(err) return console.log("request err:", err);
-          // if(res) {
-          //   localStorage.setItem("token", res.token);
-          //   store.dispatch({type: "LOGIN_SUCCESSFULLY"});
-          //   const _history = this.props.history;
-          //   const _location = this.props.location;
-          //   if(_location.state) {
-          //     _history.push(_location.state.from)
-          //   } else {
-          //     _history.push("/");
-          //   }
-          // }
       }
     })
   }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {
   withRouter,
 } from 'react-router-dom';
-import Login from "../../components/login"
+import Login from "../../components/login/index_hooks"
 import {loginAction} from "./LoginAction"
 
 const mapStateToProps = state => ({
