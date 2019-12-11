@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import { Card, Form, message, Button, Input } from 'antd';
 
-function Login(props) {
+function Login(props: any) {
 
   useEffect(() => {
     if(window.localStorage.getItem("token")) {

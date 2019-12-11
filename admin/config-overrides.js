@@ -1,5 +1,5 @@
 
-const { override, fixBabelImports, addWebpackAlias,} = require('customize-cra');
+const { override, fixBabelImports, addWebpackAlias,addWebpackResolve} = require('customize-cra');
 const path = require("path");
 
 module.exports = override(
@@ -11,4 +11,7 @@ module.exports = override(
   addWebpackAlias({
     ['@']: path.resolve(__dirname, "./src")
   }),
+  addWebpackResolve({
+    extensions: [".tsx", ".ts", ".js", ".jsx", ".json"]
+  })
 );
