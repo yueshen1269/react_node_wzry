@@ -23,16 +23,16 @@ function Login(props: any) {
   const formItemLayout = {
     labelCol: {
       xs: { span: 5 },
-      sm: { span: 3 }
+      sm: { span: 3 },
     },
     wrapperCol: {
       xs: { span: 8 },
-      sm: { span: 8 }
-    }
+      sm: { span: 8 },
+    },
   };
   const formTailLayout = {
     // labelCol: { span: 2 },
-    wrapperCol: { span: 2, offset: 2 }
+    wrapperCol: { span: 2, offset: 2 },
   };
   const { getFieldDecorator } = props.form;
   return (
@@ -42,7 +42,7 @@ function Login(props: any) {
         width: 500,
         marginTop: "10rem",
         marginLeft: "auto",
-        marginRight: "auto"
+        marginRight: "auto",
       }}
     >
       <Form {...formItemLayout} onSubmit={handleSubmit}>
@@ -51,10 +51,10 @@ function Login(props: any) {
             rules: [
               {
                 required: true,
-                message: "请输入名称"
-              }
+                message: "请输入名称",
+              },
             ],
-            initialValue: ""
+            initialValue: "",
           })(<Input />)}
         </Form.Item>
         <Form.Item label="密码">
@@ -62,10 +62,10 @@ function Login(props: any) {
             rules: [
               {
                 required: true,
-                message: "请输入密码"
-              }
+                message: "请输入密码",
+              },
             ],
-            initialValue: ""
+            initialValue: "",
           })(<Input type="password" />)}
         </Form.Item>
         <Form.Item {...formTailLayout}>
