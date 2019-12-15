@@ -1,4 +1,5 @@
 import React from "react";
+import { booleanLiteral } from "@babel/types";
 
 type AppProps = { message: string };
 enum Job {
@@ -39,6 +40,27 @@ const App = ({ message }: AppProps) => {
   const c: b = { who: "this", why: "how" };
   const flag = typeof k === typeof c;
 
+  const data: dataType = {
+    a: 3,
+    hello: 'world'
+  }
+  type dataType = {a:number, hello: string};
+  function get<S extends dataType, T extends keyof S>(o: S, name: T) {
+    return o[name]
+  }
+
+  // 类型约束 extends关键字和true约束T的类型
+  type isTrue<T> = T extends true ? true : false;
+  type kkk = dataType extends boolean ? true : false;
+
+  interface obj1  {name: string}
+  interface obj2 {password: string}
+  let userK:obj1 | obj2;
+  userK = {name: "D", password: "dd"}
+  enum doorState {
+    open, closed
+  }
+  const doorOpen:doorState = doorState.open ;
   type AppState = {};
   type Action = { type: "SET_ONE"; payload: string } | { type: "SET_TWO"; payload: number };
   function useLoading() {
