@@ -6,7 +6,7 @@ interface LoginProps extends FormComponentProps {
   history: any;
   location: any;
   match: any;
-  login: (...args: any[]) => void;
+  login: (params: { username: string; password: string; from?: string | null }) => void;
 }
 type Ref = FormComponentProps;
 const Login = forwardRef<Ref, LoginProps>(({ form, location, login }: LoginProps, ref) => {
